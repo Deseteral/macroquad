@@ -20,6 +20,12 @@ pub fn mouse_position_local() -> Vec2 {
     Vec2::new(pixels_x / screen_width(), pixels_y / screen_height()) * 2.0 - Vec2::new(1.0, 1.0)
 }
 
+pub fn delta_mouse_movement() -> (f32, f32) {
+    let context = get_context();
+
+    (context.delta_mouse_movement.x, context.delta_mouse_movement.y)
+}
+
 pub fn mouse_wheel() -> (f32, f32) {
     let context = get_context();
 

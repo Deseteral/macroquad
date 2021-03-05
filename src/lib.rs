@@ -99,6 +99,7 @@ struct Context {
     mouse_released: HashSet<MouseButton>,
     chars_pressed_queue: Vec<char>,
     mouse_position: Vec2,
+    delta_mouse_movement: Vec2,
     mouse_wheel: Vec2,
 
     draw_context: DrawContext,
@@ -127,6 +128,7 @@ impl Context {
             mouse_pressed: HashSet::new(),
             mouse_released: HashSet::new(),
             mouse_position: vec2(0., 0.),
+            delta_mouse_movement: vec2(0., 0.),
             mouse_wheel: vec2(0., 0.),
 
             draw_context: DrawContext::new(&mut ctx),
@@ -161,6 +163,7 @@ impl Context {
         self.keys_pressed.clear();
         self.mouse_pressed.clear();
         self.mouse_released.clear();
+        self.delta_mouse_movement = vec2(0., 0.);
     }
 
     fn clear(&mut self, color: Color) {
@@ -193,6 +196,11 @@ impl EventHandlerFree for Stage {
         let context = get_context();
 
         context.mouse_position = Vec2::new(x, y);
+    }
+    fn raw_mouse_motion(&mut self, dx: f32, dy: f32) {
+        let context = get_context();
+
+        context.delta_mouse_movement = Vec2::new(dx, dy);
     }
     fn mouse_wheel_event(&mut self, x: f32, y: f32) {
         let context = get_context();
